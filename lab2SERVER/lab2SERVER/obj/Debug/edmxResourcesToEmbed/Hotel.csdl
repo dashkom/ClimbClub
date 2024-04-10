@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HotelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Guest">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="second_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="GuestRoom" Relationship="Self.FK__GuestRoom__id_gu__06CD04F7" FromRole="Guest" ToRole="GuestRoom" />
+  </EntityType>
+  <EntityType Name="GuestRoom">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_guest" Type="Int32" />
+    <Property Name="id_room" Type="Int32" />
+    <NavigationProperty Name="Guest" Relationship="Self.FK__GuestRoom__id_gu__06CD04F7" FromRole="GuestRoom" ToRole="Guest" />
+    <NavigationProperty Name="Room" Relationship="Self.FK__GuestRoom__id_ro__07C12930" FromRole="GuestRoom" ToRole="Room" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="number" Type="Int32" />
+    <Property Name="class" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="GuestRoom" Relationship="Self.FK__GuestRoom__id_ro__07C12930" FromRole="Room" ToRole="GuestRoom" />
+  </EntityType>
+  <Association Name="FK__GuestRoom__id_gu__06CD04F7">
+    <End Role="Guest" Type="Self.Guest" Multiplicity="0..1" />
+    <End Role="GuestRoom" Type="Self.GuestRoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Guest">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="GuestRoom">
+        <PropertyRef Name="id_guest" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__GuestRoom__id_ro__07C12930">
+    <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
+    <End Role="GuestRoom" Type="Self.GuestRoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="GuestRoom">
+        <PropertyRef Name="id_room" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HotelEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Guest" EntityType="Self.Guest" />
+    <EntitySet Name="GuestRoom" EntityType="Self.GuestRoom" />
+    <EntitySet Name="Room" EntityType="Self.Room" />
+    <AssociationSet Name="FK__GuestRoom__id_gu__06CD04F7" Association="Self.FK__GuestRoom__id_gu__06CD04F7">
+      <End Role="Guest" EntitySet="Guest" />
+      <End Role="GuestRoom" EntitySet="GuestRoom" />
+    </AssociationSet>
+    <AssociationSet Name="FK__GuestRoom__id_ro__07C12930" Association="Self.FK__GuestRoom__id_ro__07C12930">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="GuestRoom" EntitySet="GuestRoom" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

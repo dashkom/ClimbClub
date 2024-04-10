@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ClimbersClubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Climbers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Age" Type="Int32" />
+    <NavigationProperty Name="ClimbersMountains" Relationship="Self.FK__ClimbersM__Climb__4D94879B" FromRole="Climbers" ToRole="ClimbersMountains" />
+  </EntityType>
+  <EntityType Name="ClimbersMountains">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Climber_Id" Type="Int32" />
+    <Property Name="Mountain_Id" Type="Int32" />
+    <NavigationProperty Name="Climbers" Relationship="Self.FK__ClimbersM__Climb__4D94879B" FromRole="ClimbersMountains" ToRole="Climbers" />
+    <NavigationProperty Name="Mountains" Relationship="Self.FK__ClimbersM__Mount__4E88ABD4" FromRole="ClimbersMountains" ToRole="Mountains" />
+  </EntityType>
+  <EntityType Name="Mountains">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="High" Type="Int32" />
+    <NavigationProperty Name="ClimbersMountains" Relationship="Self.FK__ClimbersM__Mount__4E88ABD4" FromRole="Mountains" ToRole="ClimbersMountains" />
+  </EntityType>
+  <Association Name="FK__ClimbersM__Climb__4D94879B">
+    <End Role="Climbers" Type="Self.Climbers" Multiplicity="0..1" />
+    <End Role="ClimbersMountains" Type="Self.ClimbersMountains" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Climbers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClimbersMountains">
+        <PropertyRef Name="Climber_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ClimbersM__Mount__4E88ABD4">
+    <End Role="Mountains" Type="Self.Mountains" Multiplicity="0..1" />
+    <End Role="ClimbersMountains" Type="Self.ClimbersMountains" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Mountains">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClimbersMountains">
+        <PropertyRef Name="Mountain_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ClimbersClubEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Climbers" EntityType="Self.Climbers" />
+    <EntitySet Name="ClimbersMountains" EntityType="Self.ClimbersMountains" />
+    <EntitySet Name="Mountains" EntityType="Self.Mountains" />
+    <AssociationSet Name="FK__ClimbersM__Climb__4D94879B" Association="Self.FK__ClimbersM__Climb__4D94879B">
+      <End Role="Climbers" EntitySet="Climbers" />
+      <End Role="ClimbersMountains" EntitySet="ClimbersMountains" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ClimbersM__Mount__4E88ABD4" Association="Self.FK__ClimbersM__Mount__4E88ABD4">
+      <End Role="Mountains" EntitySet="Mountains" />
+      <End Role="ClimbersMountains" EntitySet="ClimbersMountains" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

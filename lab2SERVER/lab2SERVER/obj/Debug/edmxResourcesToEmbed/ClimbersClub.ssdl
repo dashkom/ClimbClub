@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище ClimbersClubModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Climbers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Surname" Type="nvarchar" MaxLength="100" />
+    <Property Name="Age" Type="int" />
+  </EntityType>
+  <EntityType Name="ClimbersMountains">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Climber_Id" Type="int" />
+    <Property Name="Mountain_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Mountains">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="High" Type="int" />
+  </EntityType>
+  <Association Name="FK__ClimbersM__Climb__4D94879B">
+    <End Role="Climbers" Type="Self.Climbers" Multiplicity="0..1" />
+    <End Role="ClimbersMountains" Type="Self.ClimbersMountains" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Climbers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClimbersMountains">
+        <PropertyRef Name="Climber_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ClimbersM__Mount__4E88ABD4">
+    <End Role="Mountains" Type="Self.Mountains" Multiplicity="0..1" />
+    <End Role="ClimbersMountains" Type="Self.ClimbersMountains" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Mountains">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClimbersMountains">
+        <PropertyRef Name="Mountain_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище ClimbersClubModelContainer">
+    <EntitySet Name="Climbers" EntityType="Self.Climbers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClimbersMountains" EntityType="Self.ClimbersMountains" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mountains" EntityType="Self.Mountains" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__ClimbersM__Climb__4D94879B" Association="Self.FK__ClimbersM__Climb__4D94879B">
+      <End Role="Climbers" EntitySet="Climbers" />
+      <End Role="ClimbersMountains" EntitySet="ClimbersMountains" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ClimbersM__Mount__4E88ABD4" Association="Self.FK__ClimbersM__Mount__4E88ABD4">
+      <End Role="Mountains" EntitySet="Mountains" />
+      <End Role="ClimbersMountains" EntitySet="ClimbersMountains" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

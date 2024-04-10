@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ClimbersClubModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Climbers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="100" />
+          <Property Name="Age" Type="int" />
+        </EntityType>
+        <EntityType Name="ClimbersMountains">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Climber_Id" Type="int" />
+          <Property Name="Mountain_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Mountains">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="High" Type="int" />
+        </EntityType>
+        <Association Name="FK__ClimbersM__Climb__4D94879B">
+          <End Role="Climbers" Type="Self.Climbers" Multiplicity="0..1" />
+          <End Role="ClimbersMountains" Type="Self.ClimbersMountains" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Climbers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClimbersMountains">
+              <PropertyRef Name="Climber_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClimbersM__Mount__4E88ABD4">
+          <End Role="Mountains" Type="Self.Mountains" Multiplicity="0..1" />
+          <End Role="ClimbersMountains" Type="Self.ClimbersMountains" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mountains">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClimbersMountains">
+              <PropertyRef Name="Mountain_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ClimbersClubModelContainer">
+          <EntitySet Name="Climbers" EntityType="Self.Climbers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClimbersMountains" EntityType="Self.ClimbersMountains" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mountains" EntityType="Self.Mountains" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ClimbersM__Climb__4D94879B" Association="Self.FK__ClimbersM__Climb__4D94879B">
+            <End Role="Climbers" EntitySet="Climbers" />
+            <End Role="ClimbersMountains" EntitySet="ClimbersMountains" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClimbersM__Mount__4E88ABD4" Association="Self.FK__ClimbersM__Mount__4E88ABD4">
+            <End Role="Mountains" EntitySet="Mountains" />
+            <End Role="ClimbersMountains" EntitySet="ClimbersMountains" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClimbersClubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Climbers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <NavigationProperty Name="ClimbersMountains" Relationship="Self.FK__ClimbersM__Climb__4D94879B" FromRole="Climbers" ToRole="ClimbersMountains" />
+        </EntityType>
+        <EntityType Name="ClimbersMountains">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Climber_Id" Type="Int32" />
+          <Property Name="Mountain_Id" Type="Int32" />
+          <NavigationProperty Name="Climbers" Relationship="Self.FK__ClimbersM__Climb__4D94879B" FromRole="ClimbersMountains" ToRole="Climbers" />
+          <NavigationProperty Name="Mountains" Relationship="Self.FK__ClimbersM__Mount__4E88ABD4" FromRole="ClimbersMountains" ToRole="Mountains" />
+        </EntityType>
+        <EntityType Name="Mountains">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="High" Type="Int32" />
+          <NavigationProperty Name="ClimbersMountains" Relationship="Self.FK__ClimbersM__Mount__4E88ABD4" FromRole="Mountains" ToRole="ClimbersMountains" />
+        </EntityType>
+        <Association Name="FK__ClimbersM__Climb__4D94879B">
+          <End Role="Climbers" Type="Self.Climbers" Multiplicity="0..1" />
+          <End Role="ClimbersMountains" Type="Self.ClimbersMountains" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Climbers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClimbersMountains">
+              <PropertyRef Name="Climber_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClimbersM__Mount__4E88ABD4">
+          <End Role="Mountains" Type="Self.Mountains" Multiplicity="0..1" />
+          <End Role="ClimbersMountains" Type="Self.ClimbersMountains" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mountains">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClimbersMountains">
+              <PropertyRef Name="Mountain_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClimbersClubEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Climbers" EntityType="Self.Climbers" />
+          <EntitySet Name="ClimbersMountains" EntityType="Self.ClimbersMountains" />
+          <EntitySet Name="Mountains" EntityType="Self.Mountains" />
+          <AssociationSet Name="FK__ClimbersM__Climb__4D94879B" Association="Self.FK__ClimbersM__Climb__4D94879B">
+            <End Role="Climbers" EntitySet="Climbers" />
+            <End Role="ClimbersMountains" EntitySet="ClimbersMountains" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClimbersM__Mount__4E88ABD4" Association="Self.FK__ClimbersM__Mount__4E88ABD4">
+            <End Role="Mountains" EntitySet="Mountains" />
+            <End Role="ClimbersMountains" EntitySet="ClimbersMountains" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ClimbersClubModelContainer" CdmEntityContainer="ClimbersClubEntities">
+          <EntitySetMapping Name="Climbers">
+            <EntityTypeMapping TypeName="ClimbersClubModel.Climbers">
+              <MappingFragment StoreEntitySet="Climbers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClimbersMountains">
+            <EntityTypeMapping TypeName="ClimbersClubModel.ClimbersMountains">
+              <MappingFragment StoreEntitySet="ClimbersMountains">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Climber_Id" ColumnName="Climber_Id" />
+                <ScalarProperty Name="Mountain_Id" ColumnName="Mountain_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mountains">
+            <EntityTypeMapping TypeName="ClimbersClubModel.Mountains">
+              <MappingFragment StoreEntitySet="Mountains">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="High" ColumnName="High" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
